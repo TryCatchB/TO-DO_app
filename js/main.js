@@ -5,7 +5,9 @@ const taskInput = document.querySelector("#taskInput");
 
 let tasks = [];
 
-if (localStorage.getItem("tasks")) {
+const resultFromLocalStorage = localStorage.getItem("tasks");
+
+if (resultFromLocalStorage) {
   tasks = JSON.parse(localStorage.getItem("tasks"));
   tasks.forEach((task) => renderTask(task));
 }
