@@ -3,26 +3,21 @@ const tasksList = document.querySelector("#tasksList");
 const form = document.querySelector("#form");
 const taskInput = document.querySelector("#taskInput");
 
-// Initialize tasks array
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-// Render existing tasks from localStorage
 tasks.forEach(renderTask);
 
-// Check and update empty list state
 checkEmptyList();
 
-// Event listeners
 form.addEventListener("submit", addTask);
 tasksList.addEventListener("click", handleTaskAction);
 
-// Handle task form submission
 function addTask(event) {
   event.preventDefault();
 
   const taskText = taskInput.value.trim();
 
-  if (!taskText) return; // Prevent adding empty tasks
+  if (!taskText) return;
 
   const newTask = {
     id: Date.now(),
@@ -39,7 +34,6 @@ function addTask(event) {
   checkEmptyList();
 }
 
-// Handle task action (done or delete)
 function handleTaskAction(event) {
   const { action } = event.target.dataset;
   if (!action) return;
@@ -54,7 +48,6 @@ function handleTaskAction(event) {
   }
 }
 
-// Delete a task
 function deleteTask(taskId, taskItem) {
   tasks = tasks.filter((task) => task.id !== taskId);
   saveToLocalStorage();
@@ -62,7 +55,6 @@ function deleteTask(taskId, taskItem) {
   checkEmptyList();
 }
 
-// Toggle task completion
 function toggleTaskDone(taskId, taskItem) {
   const task = tasks.find((task) => task.id === taskId);
   if (!task) return;
@@ -74,7 +66,6 @@ function toggleTaskDone(taskId, taskItem) {
   taskTitle.classList.toggle("task-title--done");
 }
 
-// Check and update empty list state
 function checkEmptyList() {
   if (tasks.length === 0) {
     if (!document.querySelector("#emptyList")) {
@@ -93,12 +84,10 @@ function checkEmptyList() {
   }
 }
 
-// Save tasks to localStorage
 function saveToLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// Render a task
 function renderTask(task) {
   const cssClass = task.done ? "task-title task-title--done" : "task-title";
   const taskHTML = `
